@@ -1,29 +1,37 @@
-#!/bin/bash -x
+#!/bin/bash
+function wrkhrs()
+{
+case $1 in
+	2) echo "8";;
+	1) echo "4";;
+	0) echo "0";;
+esac
+}
+
 echo "Welcome to Employee Wage Computation"
 wrkhrs=0
 empPerHr=20
-empFulHr=8
-empPrtHr=4
-month=20
 empwage=0
-for ((i=1; i<=$month; i++))
+for ((i=1; i<=20; i++))
 do
 	if [ $wrkhrs -lt 100 ]
 	then
-		random=$((RANDOM%3))
-		case $random in
-		2)	echo "Employee is Present"
-		Salary=$(($empPerHr*$empFulHr))
+		ran=$((RANDOM%3))
+		case $ran in
+		2)
+		#echo "Employee is Present"
+		Salary=$(($empPerHr*`wrkhrs $ran`))
 		empwage=$(($empwage+$Salary))
-		wrkhrs=$(($wrkhrs+$empFulHr))
+		wrkhrs=$(($wrkhrs+`wrkhrs $ran`))
 			;;
-		1)	echo "Employee is Part time Present"
-		Salary=$(($empPerHr*$empPrtHr))
+		1)	empPrtHr=4
+		#echo "Employee is Part time Present"
+		Salary=$(($empPerHr*`wrkhrs $ran`))
 		empwage=$(($empwage+$Salary))
-		wrkhrs=$(($wrkhrs+$empPrtHr))
+		wrkhrs=$(($wrkhrs+`wrkhrs $ran`))
 			;;
-		*)	echo "Employee is Absent"
-		Salary=0
+		*)	Salary=0
+		#echo "Employee is Absent"
 			;;
 		esac
 	else
