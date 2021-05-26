@@ -7,16 +7,20 @@ case $1 in
 	0) echo "0";;
 esac
 }
-declare -a Day
+declare -a day
 echo "Welcome to Employee Wage Computation"
 empPerHr=20
-Totalwage=0
-for ((i=1; i<=20; i++))
+totalwage=0
+read -p "Enter the day for total wage: " nmb
+for ((i=1; i<=$nmb; i++))
 do
 	ran=$((RANDOM%3))
-	Day[$i]=$(($empPerHr*`wrkhrs $ran`))
-	Totalwage=$(($Totalwage+${Day[$i]}))
+	day[$i]=$(($empPerHr*`wrkhrs $ran`))
+	totalwage=$(($totalwage+${day[$i]}))
+done
+for i in ${!day[@]}
+do
+echo "Day $i = ${day[$i]}"
 done
 
-echo "${Day[@]} are the daily wages"
-echo "Totalwage is $Totalwage"
+echo "Totalwage is $totalwage for $nmb days"
